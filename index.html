@@ -14,13 +14,15 @@ body{background:#000;color:#fff;font:15px/1.35 -apple-system,"Segoe UI",Roboto,s
 [hidden]{display:none!important}
 button,input,select{font:inherit;color:inherit}
 #app{position:fixed;inset:0;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top)}
-header{display:flex;align-items:center;gap:10px;padding:8px 16px}
-header img{width:38px;height:38px}header b{color:var(--g);letter-spacing:1px}
+header{display:flex;align-items:center;gap:10px;padding:8px 16px;background:linear-gradient(#1a1305,#000)}
+header img{width:38px;height:38px}header b{color:var(--g);letter-spacing:1px;flex:1}
+#hb{background:var(--g);color:#000;border:0;border-radius:18px;padding:7px 14px;font-weight:700}
 main{flex:1;overflow-y:auto;padding:8px 16px 24px}
-h2{color:var(--g);font-size:17px;margin:18px 0 6px}
+h2{font-size:17px;margin:18px 0 8px}
+h2:before{content:"";display:inline-block;width:4px;height:16px;background:var(--g);border-radius:2px;margin-right:8px;vertical-align:-2px}
 .m{color:var(--m);padding:8px 0}
 .row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #1a1a1a}
-.cv{width:48px;height:48px;border-radius:8px;background:linear-gradient(135deg,#3a2a05,var(--g));overflow:hidden;flex:none}
+.cv{width:48px;height:48px;border-radius:8px;background:linear-gradient(135deg,#3a2a05,var(--g));overflow:hidden;flex:none;position:relative}
 .cv img{width:100%;height:100%;object-fit:cover}
 .tx{flex:1;min-width:0}.tx b,.tx span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tx span,.du{color:var(--m);font-size:13px}
@@ -34,16 +36,36 @@ nav button{flex:1;background:none;border:0;color:var(--m);padding:8px 0;font-siz
 nav button i{display:block;font-style:normal;font-size:20px}nav .on{color:var(--g)}
 #mini{display:flex;align-items:center;gap:10px;padding:8px 12px;background:#161616;position:relative}
 #mbar{position:absolute;left:0;top:0;height:2px;background:var(--g);width:0}
-#sheet{position:fixed;inset:0;background:#000;z-index:5;padding:calc(env(safe-area-inset-top) + 12px) 20px calc(env(safe-area-inset-bottom) + 12px);overflow-y:auto}
-#sheet .big{width:min(78vw,340px);aspect-ratio:1;height:auto;margin:12px auto;border-radius:14px}
+#sheet{position:fixed;inset:0;background:radial-gradient(#2a1d03,#000 70%);z-index:5;padding:calc(env(safe-area-inset-top) + 12px) 20px calc(env(safe-area-inset-bottom) + 12px);overflow-y:auto}
+#sheet .big{width:min(78vw,340px);aspect-ratio:1;height:auto;margin:12px auto;border-radius:16px}
 .ctl{display:flex;justify-content:space-around;align-items:center;margin:8px 0}.ctl .ic{font-size:26px}
 #spp{background:var(--g);color:#000;border-radius:50%;width:64px;height:64px}
 .chips{display:flex;gap:8px;overflow-x:auto;padding:6px 0}
-.chips button{flex:none;background:var(--c2);border:0;border-radius:20px;padding:8px 14px}
+.chips button{flex:none;background:var(--c2);border:1px solid #2a2a2a;border-radius:20px;padding:8px 14px}
 #toast{position:fixed;left:16px;right:16px;bottom:150px;background:var(--g);color:#000;padding:12px;border-radius:10px;z-index:9;font-weight:600}
-#auth{position:fixed;inset:0;overflow:auto;padding:calc(env(safe-area-inset-top) + 24px) 24px 24px}
+#auth{position:fixed;inset:0;overflow:auto;padding:calc(env(safe-area-inset-top) + 24px) 24px 24px;background:#000;z-index:8}
 #auth>div{max-width:420px;margin:auto}#auth img{width:170px;display:block;margin:0 auto 12px}
 .tm{display:flex;justify-content:space-between;color:var(--m);font-size:12px}
+/* Animations */
+#hero{position:relative;height:240px;border-radius:18px;overflow:hidden;margin:6px 0;background:#111}
+.sl{position:absolute;inset:0;opacity:0;transition:opacity 1s}.sl.on{opacity:1}
+.sl .bg{position:absolute;inset:0;background-size:cover;background-position:center}
+.sl.on .bg{animation:kb 9s ease-out forwards}
+@keyframes kb{from{transform:scale(1)}to{transform:scale(1.16)}}
+.sl:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.92),rgba(0,0,0,.05) 70%)}
+.sc{position:absolute;left:16px;right:16px;bottom:14px;z-index:2}.sc .m{padding:0;color:var(--g);font-size:12px;letter-spacing:1px}
+.hs{display:flex;gap:12px;overflow-x:auto;padding:4px 0 8px;scroll-snap-type:x proximity}
+.card{flex:none;width:136px;scroll-snap-align:start;animation:up .5s both}
+.card .cv{width:136px;height:136px;border-radius:12px}
+.card b,.card span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:4px}
+.card span{color:var(--m);font-size:12px;margin-top:0}
+.pl{position:absolute;right:6px;bottom:6px;width:30px;height:30px;border-radius:50%;background:var(--g);color:#000;display:grid;place-items:center;font-size:12px}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.eq{display:flex;gap:2px;align-items:flex-end;height:16px}.eq i{width:3px;background:var(--g);height:4px}
+.playing .eq i{animation:eq .8s infinite ease-in-out}.eq i:nth-child(2){animation-delay:.2s}.eq i:nth-child(3){animation-delay:.4s}
+@keyframes eq{50%{height:16px}}
+.playing #scv{animation:glow 2.2s infinite ease-in-out}
+@keyframes glow{50%{box-shadow:0 0 44px rgba(245,184,46,.5);transform:scale(1.03)}}
 </style></head><body>
 
 <div id="auth" hidden><div>
@@ -53,14 +75,15 @@ nav button i{display:block;font-style:normal;font-size:20px}nav .on{color:var(--
  <input id="pw" type="password" placeholder="Mot de passe (6 caractères minimum)" autocomplete="current-password">
  <button class="btn" id="li">Connexion</button>
  <button class="btn s" id="su">Créer un compte</button>
+ <button class="btn s" id="ax">Continuer sans compte</button>
  <p class="m" id="am2"></p>
 </div></div>
 
 <div id="app" hidden>
- <header><img src="logo.png" alt=""><b>BLING MONEY MUSIC</b></header>
+ <header><img src="logo.png" alt=""><b>BLING MONEY MUSIC</b><button id="hb" data-login>Connexion</button></header>
  <main id="view"></main>
  <div id="mini" hidden><i id="mbar"></i><div class="cv" id="mcv"></div>
-  <div class="tx"><b id="mt"></b><span id="ma"></span></div>
+  <div class="tx"><b id="mt"></b><span id="ma"></span></div><span class="eq"><i></i><i></i><i></i></span>
   <button class="ic" id="mpp">▶</button><button class="ic" id="mnx">⏭</button></div>
  <nav id="nav">
   <button data-tab="home"><i>⌂</i>Accueil</button><button data-tab="explore"><i>⌕</i>Explorer</button>
@@ -88,37 +111,53 @@ const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt=s=>{s=Math.floor(s||0);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
 const QS='*,artists(name),genres(name)';
-let user=null,profile=null,tab='home',FAV=new Set(),DL=new Set(),L={},T={},Q=[],qi=-1,shuf=false,rep=0,cur=null,curUrl=null;
+let user=null,profile=null,tab='home',FAV=new Set(),DL=new Set(),L={},T={},Q=[],qi=-1,shuf=false,rep=0,cur=null,curUrl=null,hT=null;
 const au=$('#au');
 function toast(m){const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>t.hidden=true,3500)}
 
-/* ---------- Stockage hors ligne (IndexedDB) ---------- */
+/* ---------- Hors ligne (IndexedDB) ---------- */
 const db=new Promise((ok,ko)=>{const r=indexedDB.open('bmm',1);r.onupgradeneeded=()=>r.result.createObjectStore('dl',{keyPath:'id'});r.onsuccess=()=>ok(r.result);r.onerror=()=>ko(r.error)});
 const dbx=async(m,f)=>{const d=await db;return new Promise((ok,ko)=>{const t=d.transaction('dl',m),r=f(t.objectStore('dl'));t.oncomplete=()=>ok(r.result);t.onerror=()=>ko(t.error)})};
 const dlAll=()=>dbx('readonly',s=>s.getAll()),dlGet=id=>dbx('readonly',s=>s.get(id)),dlPut=o=>dbx('readwrite',s=>s.put(o)),dlDel=id=>dbx('readwrite',s=>s.delete(id));
-const refDL=async()=>{DL=new Set((await dlAll()).map(x=>x.id))};
+const refDL=async()=>{try{DL=new Set((await dlAll()).map(x=>x.id))}catch(e){}};
+
+/* ---------- Sources de musique ---------- */
+const norm=r=>({id:r.id,title:r.title,artist:r.artists?.name||'',genre:r.genres?.name||'',cover:r.cover_url,path:r.audio_path,dur:r.duration_seconds,dlable:r.downloadable});
+// Audius : plateforme de streaming gratuite d'artistes indépendants (écoute légale, sans téléchargement)
+const AUD='https://api.audius.co/v1',AN='app_name=BLINGMONEYMUSIC';
+const aN=r=>({id:'a:'+r.id,ext:1,title:r.title,artist:r.user?.name||'',genre:r.genre||'',cover:r.artwork?.['480x480']||r.artwork?.['150x150']||null,src:`${AUD}/tracks/${r.id}/stream?${AN}`,dur:r.duration});
+async function aj(p){const r=await fetch(`${AUD}${p}${p.includes('?')?'&':'?'}${AN}`);if(!r.ok)throw new Error('Audius '+r.status);return (await r.json()).data.map(aN)}
+const aSearch=q=>aj('/tracks/search?limit=14&query='+encodeURIComponent(q));
+const aTrend=g=>aj('/tracks/trending?limit=14'+(g?'&genre='+encodeURIComponent(g):''));
 
 /* ---------- Affichage ---------- */
-const norm=r=>({id:r.id,title:r.title,artist:r.artists?.name||'',genre:r.genres?.name||'',cover:r.cover_url,path:r.audio_path,dur:r.duration_seconds,dlable:r.downloadable,feat:r.featured});
-const row=(t,k,i)=>{T[t.id]=t;return `<div class="row" data-play="${esc(k)}:${i}"><div class="cv">${t.cover?`<img src="${esc(t.cover)}" loading="lazy" alt="" onerror="this.remove()">`:''}</div><div class="tx"><b>${esc(t.title)}</b><span>${esc(t.artist)}${t.genre?' · '+esc(t.genre):''}</span></div><span class="du">${fmt(t.dur)}</span>${t.dlable?`<button class="ic ${DL.has(t.id)?'on':''}" data-dl="${t.id}">${DL.has(t.id)?'✓':'⇩'}</button>`:''}<button class="ic ${FAV.has(t.id)?'on':''}" data-fav="${t.id}">${FAV.has(t.id)?'♥':'♡'}</button></div>`};
+const img=t=>t.cover?`<img src="${esc(t.cover)}" loading="lazy" alt="" onerror="this.remove()">`:'';
+const row=(t,k,i)=>{T[t.id]=t;return `<div class="row" data-play="${esc(k)}:${i}"><div class="cv">${img(t)}</div><div class="tx"><b>${esc(t.title)}</b><span>${esc(t.artist)}${t.genre?' · '+esc(t.genre):''}</span></div><span class="du">${fmt(t.dur)}</span>${t.dlable?`<button class="ic ${DL.has(t.id)?'on':''}" data-dl="${t.id}">${DL.has(t.id)?'✓':'⇩'}</button>`:''}${t.ext?'':`<button class="ic ${FAV.has(t.id)?'on':''}" data-fav="${t.id}">${FAV.has(t.id)?'♥':'♡'}</button>`}</div>`};
 const sec=(h,l,k)=>{L[k]=l;return `<h2>${esc(h)}</h2>`+l.map((t,i)=>row(t,k,i)).join('')};
+const card=(t,k,i)=>{T[t.id]=t;return `<div class="card" data-play="${esc(k)}:${i}" style="animation-delay:${Math.min(i,8)*60}ms"><div class="cv">${img(t)}<span class="pl">▶</span></div><b>${esc(t.title)}</b><span>${esc(t.artist)}</span></div>`};
+const hsec=(h,l,k)=>{if(!l||!l.length)return '';L[k]=l;return `<h2>${esc(h)}</h2><div class="hs">${l.map((t,i)=>card(t,k,i)).join('')}</div>`};
+const needLogin=m=>`<p class="m">${m}</p><button class="btn" data-login>Se connecter</button>`;
 
 const views={
-async home(v){const {data,error}=await SB.from('tracks').select(QS).eq('status','approved').order('published_at',{ascending:false}).limit(150);if(error)throw error;await refDL();const a=data.map(norm);
- if(!a.length){v.innerHTML='<p class="m">Aucune musique pour le moment. L’administrateur doit d’abord ajouter des titres (Profil, puis Espace administrateur).</p>';return}
- let h='';const f=a.filter(x=>x.feat);if(f.length)h+=sec('À la une',f.slice(0,5),'feat');h+=sec('Nouveautés',a.slice(0,8),'new');
- const g={};a.forEach(x=>{if(x.genre)(g[x.genre]=g[x.genre]||[]).push(x)});Object.keys(g).forEach(n=>h+=sec(n,g[n].slice(0,6),'g:'+n));v.innerHTML=h},
-async explore(v){const {data:gs}=await SB.from('genres').select('id,name').order('name');
- v.innerHTML=`<input id="q" type="search" placeholder="Chanson, artiste, producteur…"><div class="chips">${(gs||[]).map(g=>`<button data-g="${g.id}">${esc(g.name)}</button>`).join('')}</div><div id="res"></div>`;
- let tm;$('#q').oninput=e=>{clearTimeout(tm);tm=setTimeout(()=>find(e.target.value),300)}},
+async home(v){await refDL();
+ const jobs=[SB.from('tracks').select(QS).eq('status','approved').order('published_at',{ascending:false}).limit(30).then(r=>(r.data||[]).map(norm)),aTrend(),aSearch('afrobeat'),aSearch('amapiano'),aSearch('gospel'),aSearch('gabon'),aTrend('Hip-Hop/Rap'),aTrend('R&B/Soul')];
+ const [own,tr,afro,ama,gos,gab,hip,rnb]=(await Promise.allSettled(jobs)).map(x=>x.value||[]);
+ const hero=[...own.slice(0,3),...tr.slice(0,5)].filter(t=>t.cover).slice(0,6);L.hero=hero;
+ if(!own.length&&!tr.length){v.innerHTML='<p class="m">Impossible de charger la musique. Vérifie ta connexion Internet, ou ouvre l’onglet Téléch. pour écouter hors ligne.</p>';return}
+ let h=hero.length?`<div id="hero">${hero.map((t,i)=>`<div class="sl ${i?'':'on'}"><div class="bg" style="background-image:url('${esc(t.cover)}')"></div><div class="sc"><span class="m">${t.ext?'TENDANCE':'BLING MONEY MUSIC'}</span><b style="font-size:21px;display:block">${esc(t.title)}</b><span class="m" style="color:#ddd">${esc(t.artist)}</span><br><button class="btn" style="width:auto;padding:8px 18px" data-play="hero:${i}">▶ Écouter</button></div></div>`).join('')}</div>`:'';
+ h+=hsec('Catalogue BLING MONEY',own,'own')+hsec('Tendances musicales',tr,'tr')+hsec('Afrobeat',afro,'af')+hsec('Amapiano',ama,'am')+hsec('Musiques gabonaises',gab,'ga')+hsec('Gospel',gos,'go')+hsec('Hip-hop',hip,'hi')+hsec('R&B',rnb,'rb');
+ h+='<p class="m" style="font-size:12px;text-align:center">Musique sur Internet fournie par Audius (écoute uniquement).</p>';v.innerHTML=h;
+ let hi=0;hT=setInterval(()=>{const s=$$('.sl');if(s.length<2)return;s[hi].classList.remove('on');hi=(hi+1)%s.length;s[hi].classList.add('on')},5500)},
+async explore(v){v.innerHTML=`<input id="q" type="search" placeholder="Chanson, artiste, genre…"><div class="chips">${['Afrobeat','Amapiano','Gospel','Hip-hop','R&B','Gabon','Rumba','Coupé-décalé','Zouk'].map(x=>`<button data-s="${esc(x)}">${esc(x)}</button>`).join('')}</div><div id="res"></div>`;
+ let tm;$('#q').oninput=e=>{clearTimeout(tm);tm=setTimeout(()=>find(e.target.value),350)}},
 async dl(v){const a=await dlAll();DL=new Set(a.map(x=>x.id));const l=a.map(x=>x.t);L.d=l;const mb=(a.reduce((s,x)=>s+x.size,0)/1048576).toFixed(1);
- v.innerHTML=`<h2>Ma musique hors ligne</h2><p class="m">${l.length} titre(s) · ${mb} Mo sur ce téléphone. Appuie sur ✓ pour supprimer un téléchargement.</p>`+(l.length?l.map((t,i)=>row(t,'d',i)).join(''):'<p class="m">Aucun téléchargement. Appuie sur ⇩ à côté d’un titre.</p>')},
-async lib(v){if(!user){v.innerHTML='<p class="m">Connecte-toi pour voir ta bibliothèque.</p>';return}await refDL();
+ v.innerHTML=`<h2>Ma musique hors ligne</h2><p class="m">${l.length} titre(s) · ${mb} Mo sur ce téléphone. Appuie sur ✓ pour supprimer un téléchargement.</p>`+(l.length?l.map((t,i)=>row(t,'d',i)).join(''):'<p class="m">Aucun téléchargement. Les titres du Catalogue BLING MONEY autorisés ont un bouton ⇩.</p>')},
+async lib(v){if(!user){v.innerHTML=needLogin('Connecte-toi pour retrouver tes favoris et ton historique.');return}await refDL();
  const [f,h]=await Promise.all([SB.from('favorites').select(`tracks(${QS})`).eq('user_id',user.id).order('created_at',{ascending:false}),SB.from('plays').select(`tracks(${QS})`).eq('user_id',user.id).order('played_at',{ascending:false}).limit(40)]);
  const fl=(f.data||[]).map(x=>x.tracks).filter(Boolean).map(norm),seen=new Set(),hl=(h.data||[]).map(x=>x.tracks).filter(x=>x&&!seen.has(x.id)&&seen.add(x.id)).map(norm);
- v.innerHTML=(fl.length?sec('Mes favoris',fl,'f'):'<h2>Mes favoris</h2><p class="m">Appuie sur ♡ pour ajouter un titre.</p>')+(hl.length?sec('Historique d’écoute',hl.slice(0,15),'h'):'')},
-async me(v){if(!user){v.innerHTML='<p class="m">Non connecté (mode hors ligne).</p>';return}
- v.innerHTML=`<h2>Mon profil</h2><p class="m">${esc(user.email)}${profile?.role==='admin'?' · Administrateur':''}</p><input id="dn" placeholder="Nom affiché" value="${esc(profile?.display_name)}"><button class="btn" id="sv">Enregistrer</button>${profile?.role==='admin'?'<button class="btn s" data-go="admin">Espace administrateur</button>':''}<button class="btn s" id="lo">Se déconnecter</button><p class="m">Pour installer l’app : sur iPhone, bouton Partager puis « Sur l’écran d’accueil ». Sur Android, menu ⋮ puis « Installer l’application ».</p>`;
+ v.innerHTML=(fl.length?sec('Mes favoris',fl,'f'):'<h2>Mes favoris</h2><p class="m">Appuie sur ♡ pour ajouter un titre du catalogue BLING MONEY.</p>')+(hl.length?sec('Historique d’écoute',hl.slice(0,15),'h'):'')},
+async me(v){if(!user){v.innerHTML='<h2>Profil</h2>'+needLogin('Tu écoutes en invité. Crée un compte pour les favoris, l’historique et les téléchargements.');return}
+ v.innerHTML=`<h2>Mon profil</h2><p class="m">${esc(user.email)}${profile?.role==='admin'?' · Administrateur':''}</p><input id="dn" placeholder="Nom affiché" value="${esc(profile?.display_name)}"><button class="btn" id="sv">Enregistrer</button>${profile?.role==='admin'?'<button class="btn s" data-go="admin">Espace administrateur</button>':''}<button class="btn s" id="lo">Se déconnecter</button><p class="m">Pour installer l’app : sur iPhone, bouton Partager puis « Sur l’écran d’accueil ».</p>`;
  $('#sv').onclick=async()=>{const {error}=await SB.from('profiles').update({display_name:$('#dn').value}).eq('id',user.id);toast(error?error.message:'Profil enregistré')};
  $('#lo').onclick=()=>SB.auth.signOut()},
 async admin(v){if(profile?.role!=='admin'){v.innerHTML='<p class="m">Accès réservé.</p>';return}
@@ -127,20 +166,24 @@ async admin(v){if(profile?.role!=='admin'){v.innerHTML='<p class="m">Accès rés
  $('#af').onchange=e=>{const f=e.target.files[0];$('#afn').textContent=f?'✓ '+f.name+' ('+(f.size/1048576).toFixed(1)+' Mo)':'Aucun fichier choisi'};
  $('#as').onclick=publish}
 };
-async function render(){const v=$('#view');$$('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.tab===tab||(tab==='admin'&&b.dataset.tab==='me')));v.innerHTML='<p class="m">Chargement…</p>';
+async function render(){clearInterval(hT);const v=$('#view');$$('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.tab===tab||(tab==='admin'&&b.dataset.tab==='me')));v.innerHTML='<p class="m">Chargement…</p>';
  try{await views[tab](v)}catch(e){v.innerHTML=`<p class="m">Erreur : ${esc(e.message)}</p>`}}
 
-async function find(q,gid){const r=$('#res');q=(q||'').replace(/[,()%*]/g,' ').trim();if(!q&&!gid){r.innerHTML='';return}
- let qb=SB.from('tracks').select(QS).eq('status','approved').limit(50);
- if(gid)qb=qb.eq('genre_id',gid);else{const {data:ar}=await SB.from('artists').select('id').eq('status','approved').ilike('name',`%${q}%`);let f=`title.ilike.%${q}%,producer.ilike.%${q}%`;if(ar&&ar.length)f+=`,artist_id.in.(${ar.map(x=>x.id).join(',')})`;qb=qb.or(f)}
- const {data,error}=await qb;if(error){r.innerHTML=`<p class="m">${esc(error.message)}</p>`;return}await refDL();const l=data.map(norm);L.s=l;r.innerHTML=l.length?l.map((t,i)=>row(t,'s',i)).join(''):'<p class="m">Aucun résultat.</p>'}
+async function ownSearch(q){const [a,g]=await Promise.all([SB.from('artists').select('id').eq('status','approved').ilike('name',`%${q}%`),SB.from('genres').select('id').ilike('name',`%${q}%`)]);
+ let f=`title.ilike.%${q}%,producer.ilike.%${q}%`;if(a.data?.length)f+=`,artist_id.in.(${a.data.map(x=>x.id).join(',')})`;if(g.data?.length)f+=`,genre_id.in.(${g.data.map(x=>x.id).join(',')})`;
+ const {data}=await SB.from('tracks').select(QS).eq('status','approved').or(f).limit(30);return (data||[]).map(norm)}
+async function find(q){const r=$('#res');q=(q||'').replace(/[,()%*]/g,' ').trim();if(!q){r.innerHTML='';return}r.innerHTML='<p class="m">Recherche…</p>';
+ const [own,ext]=await Promise.allSettled([ownSearch(q),aSearch(q)]);await refDL();let h='';
+ if(own.value?.length)h+=sec('Catalogue BLING MONEY',own.value,'so');if(ext.value?.length)h+=sec('Sur Internet (Audius)',ext.value,'se');
+ r.innerHTML=h||'<p class="m">Aucun résultat.</p>'}
 
 /* ---------- Favoris & téléchargements ---------- */
-async function fav(id){if(!user)return toast('Connecte-toi d’abord');
+async function fav(id){if(!user)return toast('Connecte-toi pour utiliser les favoris');
  if(FAV.has(id)){FAV.delete(id);await SB.from('favorites').delete().eq('user_id',user.id).eq('track_id',id)}else{FAV.add(id);await SB.from('favorites').insert({user_id:user.id,track_id:id})}
  $$(`[data-fav="${id}"]`).forEach(x=>{x.textContent=FAV.has(id)?'♥':'♡';x.classList.toggle('on',FAV.has(id))})}
 async function dl(id,b){const t=T[id];if(!t)return;
  if(DL.has(id)){if(confirm('Supprimer ce téléchargement du téléphone ?')){await dlDel(id);DL.delete(id);if(tab==='dl')render();else{b.textContent='⇩';b.classList.remove('on')}}return}
+ if(!user)return toast('Connecte-toi pour télécharger');
  if(!navigator.onLine)return toast('Connexion Internet nécessaire pour télécharger');
  try{b.textContent='0%';navigator.storage?.persist?.();
   const {data,error}=await SB.storage.from('audio').createSignedUrl(t.path,600);if(error)throw error;
@@ -152,22 +195,25 @@ async function dl(id,b){const t=T[id];if(!t)return;
  }catch(e){b.textContent='⇩';toast('Échec du téléchargement : '+e.message)}}
 
 /* ---------- Lecteur ---------- */
-async function playIdx(i){if(i<0||i>=Q.length)return;qi=i;cur=Q[i];const loc=await dlGet(cur.id);let src;
+async function playIdx(i){if(i<0||i>=Q.length)return;qi=i;cur=Q[i];let src;
  if(curUrl){URL.revokeObjectURL(curUrl);curUrl=null}
- if(loc){src=curUrl=URL.createObjectURL(loc.blob)}
- else{if(!navigator.onLine)return toast('Hors connexion : ce titre n’est pas téléchargé');const {data,error}=await SB.storage.from('audio').createSignedUrl(cur.path,3600);if(error)return toast(error.message);src=data.signedUrl;
-  if(user)SB.from('plays').insert({user_id:user.id,track_id:cur.id}).then(()=>{})}
+ if(cur.ext){if(!navigator.onLine)return toast('Hors connexion : ce titre nécessite Internet');src=cur.src}
+ else{const loc=await dlGet(cur.id);
+  if(loc){src=curUrl=URL.createObjectURL(loc.blob)}
+  else{if(!navigator.onLine)return toast('Hors connexion : ce titre n’est pas téléchargé');const {data,error}=await SB.storage.from('audio').createSignedUrl(cur.path,3600);if(error)return toast('Lecture impossible : '+error.message);src=data.signedUrl;
+   if(user)SB.from('plays').insert({user_id:user.id,track_id:cur.id}).then(()=>{})}}
  au.src=src;try{await au.play()}catch(e){toast('Lecture impossible : '+e.message)}setUI()}
 function next(auto){if(!Q.length)return;if(shuf&&Q.length>1){let j;do{j=Math.floor(Math.random()*Q.length)}while(j===qi);return playIdx(j)}
  if(qi+1<Q.length)return playIdx(qi+1);if(rep===2||!auto)return playIdx(0)}
 function prev(){if(au.currentTime>3)au.currentTime=0;else playIdx(qi>0?qi-1:0)}
-function setUI(){if(!cur)return;$('#mini').hidden=false;const im=cur.cover?`<img src="${esc(cur.cover)}" alt="" onerror="this.remove()">`:'';
+function setUI(){if(!cur)return;$('#mini').hidden=false;const im=img(cur);
  $('#mcv').innerHTML=im;$('#scv').innerHTML=im;$('#mt').textContent=$('#st').textContent=cur.title;$('#ma').textContent=$('#sa').textContent=cur.artist;
  $('#sq').innerHTML=Q.map((t,i)=>`<div class="row" data-q="${i}"><div class="tx"><b ${i===qi?'style="color:var(--g)"':''}>${esc(t.title)}</b><span>${esc(t.artist)}</span></div></div>`).join('');
  if('mediaSession' in navigator){navigator.mediaSession.metadata=new MediaMetadata({title:cur.title,artist:cur.artist,artwork:cur.cover?[{src:cur.cover}]:[{src:new URL('icon-512.png',location.href).href,sizes:'512x512',type:'image/png'}]})}}
 au.addEventListener('timeupdate',()=>{const p=au.duration?au.currentTime/au.duration:0;$('#mbar').style.width=p*100+'%';$('#sk').value=p*1000;$('#tc').textContent=fmt(au.currentTime);$('#td').textContent=fmt(au.duration)});
 au.addEventListener('ended',()=>{if(rep===1)playIdx(qi);else next(true)});
-['play','pause'].forEach(ev=>au.addEventListener(ev,()=>{const s=au.paused?'▶':'⏸';$('#mpp').textContent=$('#spp').textContent=s;if('mediaSession' in navigator)navigator.mediaSession.playbackState=au.paused?'paused':'playing'}));
+au.addEventListener('error',()=>{if(au.src)toast('Ce titre ne peut pas être lu pour le moment')});
+['play','pause'].forEach(ev=>au.addEventListener(ev,()=>{const s=au.paused?'▶':'⏸';$('#mpp').textContent=$('#spp').textContent=s;document.body.classList.toggle('playing',!au.paused);if('mediaSession' in navigator)navigator.mediaSession.playbackState=au.paused?'paused':'playing'}));
 const tog=()=>au.src&&(au.paused?au.play():au.pause());
 $('#mpp').onclick=$('#spp').onclick=tog;$('#mnx').onclick=$('#nx').onclick=()=>next(false);$('#pv').onclick=prev;
 $('#sk').oninput=e=>{if(au.duration)au.currentTime=e.target.value/1000*au.duration};
@@ -189,31 +235,32 @@ async function publish(){const m=$('#am'),name=$('#aa').value.trim(),title=$('#a
   const up=await SB.storage.from('audio').upload(p+safe(af.name),af);if(up.error)throw up.error;
   let cover=null;if(cf){const uc=await SB.storage.from('covers').upload(p+safe(cf.name),cf);if(uc.error)throw uc.error;cover=SB.storage.from('covers').getPublicUrl(uc.data.path).data.publicUrl}
   const ok=$('#ar').checked,ins=await SB.from('tracks').insert({artist_id:a.id,genre_id:+$('#ag').value,title,producer:$('#ap').value.trim()||null,duration_seconds:await durOf(af),cover_url:cover,audio_path:up.data.path,rights_confirmed:ok,downloadable:ok,status:'approved',published_at:new Date().toISOString()});
-  if(ins.error)throw ins.error;m.textContent='✓ Titre publié.';['at','ap','af','ac'].forEach(i=>$('#'+i).value='')
+  if(ins.error)throw ins.error;m.textContent='✓ Titre publié.';['at','ap','af','ac'].forEach(i=>$('#'+i).value='');$('#afn').textContent='Aucun fichier choisi'
  }catch(e){m.textContent='Erreur : '+e.message}$('#as').disabled=false}
 
 /* ---------- Clics ---------- */
 document.addEventListener('click',e=>{const t=e.target;let b;
+ if(b=t.closest('[data-login]')){$('#auth').hidden=false;return}
  if(b=t.closest('[data-dl]'))return dl(b.dataset.dl,b);
  if(b=t.closest('[data-fav]'))return fav(b.dataset.fav);
- if(b=t.closest('[data-g]'))return find('',b.dataset.g);
+ if(b=t.closest('[data-s]')){tab='explore';$$('#nav button').forEach(x=>x.classList.toggle('on',x.dataset.tab==='explore'));const q=$('#q');if(q)q.value=b.dataset.s;return find(b.dataset.s)}
  if(b=t.closest('[data-go]')){tab=b.dataset.go;return render()}
  if(b=t.closest('#nav button')){tab=b.dataset.tab;return render()}
  if(b=t.closest('[data-q]'))return playIdx(+b.dataset.q);
  if(b=t.closest('[data-play]')){const s=b.dataset.play,c=s.lastIndexOf(':');Q=[...L[s.slice(0,c)]];return playIdx(+s.slice(c+1))}
  if(t.closest('#mini')&&!t.closest('button'))$('#sheet').hidden=false});
 
-/* ---------- Connexion ---------- */
+/* ---------- Connexion (facultative) ---------- */
 const am2=m=>$('#am2').textContent=m;
 const cred=()=>{const email=$('#em').value.trim(),password=$('#pw').value;if(!email||!password){am2('Écris ton e-mail ET ton mot de passe, puis appuie à nouveau.');return null}if(password.length<6){am2('Le mot de passe doit avoir au moins 6 caractères.');return null}am2('Un instant…');return {email,password}};
 $('#li').onclick=async()=>{const c=cred();if(!c)return;const {error}=await SB.auth.signInWithPassword(c);error?am2('Connexion impossible : '+error.message):boot()};
 $('#su').onclick=async()=>{const c=cred();if(!c)return;const {data,error}=await SB.auth.signUp({...c,options:{data:{display_name:$('#nm').value.trim()}}});
- if(error)am2('Création impossible : '+error.message);else if(!data.session)am2('Compte créé. Vérifie ton e-mail, puis reviens te connecter.');else boot()};
+ if(error)am2('Création impossible : '+error.message);else if(!data.session)am2('Compte créé. Vérifie ton e-mail, confirme, puis reviens te connecter.');else boot()};
+$('#ax').onclick=()=>$('#auth').hidden=true;
 SB.auth.onAuthStateChange(ev=>{if(ev==='SIGNED_OUT'){au.pause();$('#mini').hidden=true;boot()}});
 async function boot(){const {data}=await SB.auth.getSession();user=data.session?.user||null;profile=null;FAV=new Set();
  if(user){try{const p=await SB.from('profiles').select('*').eq('id',user.id).single();profile=p.data;const f=await SB.from('favorites').select('track_id');FAV=new Set((f.data||[]).map(x=>x.track_id))}catch(e){}}
- if(!user&&navigator.onLine){$('#app').hidden=true;$('#auth').hidden=false;return}
- $('#auth').hidden=true;$('#app').hidden=false;if(!user)tab='dl';render()}
+ $('#auth').hidden=true;$('#app').hidden=false;$('#hb').hidden=!!user;if(!navigator.onLine&&tab==='home')tab='dl';tab==='admin'&&profile?.role!=='admin'&&(tab='home');render()}
 boot();
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js'));
 </script></body></html>
