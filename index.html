@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png">
+<title>BLING MONEY MUSIC</title>
+<style>
+:root{--g:#f5b82e;--c:#121212;--c2:#1d1d1d;--m:#9a9a9a;color-scheme:dark}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{background:#000;color:#fff;font:15px/1.35 -apple-system,"Segoe UI",Roboto,sans-serif;overflow:hidden}
+[hidden]{display:none!important}
+button,input,select{font:inherit;color:inherit}
+#app{position:fixed;inset:0;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top)}
+header{display:flex;align-items:center;gap:10px;padding:8px 16px}
+header img{width:38px;height:38px}header b{color:var(--g);letter-spacing:1px}
+main{flex:1;overflow-y:auto;padding:8px 16px 24px}
+h2{color:var(--g);font-size:17px;margin:18px 0 6px}
+.m{color:var(--m);padding:8px 0}
+.row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #1a1a1a}
+.cv{width:48px;height:48px;border-radius:8px;background:linear-gradient(135deg,#3a2a05,var(--g));overflow:hidden;flex:none}
+.cv img{width:100%;height:100%;object-fit:cover}
+.tx{flex:1;min-width:0}.tx b,.tx span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tx span,.du{color:var(--m);font-size:13px}
+.ic{background:none;border:0;font-size:20px;min-width:40px;height:40px;color:#ddd}.ic.on{color:var(--g)}
+.btn{background:var(--g);color:#000;border:0;border-radius:10px;padding:12px 16px;font-weight:700;width:100%;margin:6px 0}
+.btn.s{background:var(--c2);color:#fff}
+input,select{background:var(--c);border:1px solid #2a2a2a;border-radius:10px;padding:12px;width:100%;margin:6px 0}
+input[type=range]{padding:0;border:0;background:none;accent-color:var(--g)}
+nav{display:flex;border-top:1px solid #1d1d1d;background:#0a0a0a;padding-bottom:env(safe-area-inset-bottom)}
+nav button{flex:1;background:none;border:0;color:var(--m);padding:8px 0;font-size:10px}
+nav button i{display:block;font-style:normal;font-size:20px}nav .on{color:var(--g)}
+#mini{display:flex;align-items:center;gap:10px;padding:8px 12px;background:#161616;position:relative}
+#mbar{position:absolute;left:0;top:0;height:2px;background:var(--g);width:0}
+#sheet{position:fixed;inset:0;background:#000;z-index:5;padding:calc(env(safe-area-inset-top) + 12px) 20px calc(env(safe-area-inset-bottom) + 12px);overflow-y:auto}
+#sheet .big{width:min(78vw,340px);aspect-ratio:1;height:auto;margin:12px auto;border-radius:14px}
+.ctl{display:flex;justify-content:space-around;align-items:center;margin:8px 0}.ctl .ic{font-size:26px}
+#spp{background:var(--g);color:#000;border-radius:50%;width:64px;height:64px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:6px 0}
+.chips button{flex:none;background:var(--c2);border:0;border-radius:20px;padding:8px 14px}
+#toast{position:fixed;left:16px;right:16px;bottom:150px;background:var(--g);color:#000;padding:12px;border-radius:10px;z-index:9;font-weight:600}
+#auth{position:fixed;inset:0;overflow:auto;padding:calc(env(safe-area-inset-top) + 24px) 24px 24px}
+#auth>div{max-width:420px;margin:auto}#auth img{width:170px;display:block;margin:0 auto 12px}
+.tm{display:flex;justify-content:space-between;color:var(--m);font-size:12px}
+</style></head><body>
+
+<div id="auth" hidden><div>
+ <img src="logo.png" alt="BLING MONEY MUSIC">
+ <input id="nm" placeholder="Nom (pour créer un compte)">
+ <input id="em" type="email" placeholder="E-mail" autocomplete="email">
+ <input id="pw" type="password" placeholder="Mot de passe (6 caractères minimum)" autocomplete="current-password">
+ <button class="btn" id="li">Connexion</button>
+ <button class="btn s" id="su">Créer un compte</button>
+ <p class="m" id="am2"></p>
+</div></div>
+
+<div id="app" hidden>
+ <header><img src="logo.png" alt=""><b>BLING MONEY MUSIC</b></header>
+ <main id="view"></main>
+ <div id="mini" hidden><i id="mbar"></i><div class="cv" id="mcv"></div>
+  <div class="tx"><b id="mt"></b><span id="ma"></span></div>
+  <button class="ic" id="mpp">▶</button><button class="ic" id="mnx">⏭</button></div>
+ <nav id="nav">
+  <button data-tab="home"><i>⌂</i>Accueil</button><button data-tab="explore"><i>⌕</i>Explorer</button>
+  <button data-tab="dl"><i>⇩</i>Téléch.</button><button data-tab="lib"><i>♪</i>Biblio.</button>
+  <button data-tab="me"><i>☺</i>Profil</button>
+ </nav>
+</div>
+
+<div id="sheet" hidden>
+ <button class="ic" id="sc">⌄ Fermer</button>
+ <div class="cv big" id="scv"></div>
+ <div class="tx" style="text-align:center"><b id="st" style="font-size:18px"></b><span id="sa"></span></div>
+ <input type="range" id="sk" min="0" max="1000" value="0"><div class="tm"><span id="tc">0:00</span><span id="td">0:00</span></div>
+ <div class="ctl"><button class="ic" id="sh">⇄</button><button class="ic" id="pv">⏮</button><button class="ic" id="spp">▶</button><button class="ic" id="nx">⏭</button><button class="ic" id="rp">↻</button></div>
+ <input type="range" id="vo" min="0" max="1" step="0.05" value="1" aria-label="Volume">
+ <h2>File d’attente</h2><div id="sq"></div>
+</div>
+<div id="toast" hidden></div>
+<audio id="au" preload="auto"></audio>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.4/dist/umd/supabase.min.js"></script>
+<script>
+const SB=supabase.createClient('https://sczsgewnwhvkycdodibh.supabase.co','sb_publishable_KlP9L9pnVIdyz5yD1gvn3g_5DbQxpVz');
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=s=>{s=Math.floor(s||0);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
+const QS='*,artists(name),genres(name)';
+let user=null,profile=null,tab='home',FAV=new Set(),DL=new Set(),L={},T={},Q=[],qi=-1,shuf=false,rep=0,cur=null,curUrl=null;
+const au=$('#au');
+function toast(m){const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>t.hidden=true,3500)}
+
+/* ---------- Stockage hors ligne (IndexedDB) ---------- */
+const db=new Promise((ok,ko)=>{const r=indexedDB.open('bmm',1);r.onupgradeneeded=()=>r.result.createObjectStore('dl',{keyPath:'id'});r.onsuccess=()=>ok(r.result);r.onerror=()=>ko(r.error)});
+const dbx=async(m,f)=>{const d=await db;return new Promise((ok,ko)=>{const t=d.transaction('dl',m),r=f(t.objectStore('dl'));t.oncomplete=()=>ok(r.result);t.onerror=()=>ko(t.error)})};
+const dlAll=()=>dbx('readonly',s=>s.getAll()),dlGet=id=>dbx('readonly',s=>s.get(id)),dlPut=o=>dbx('readwrite',s=>s.put(o)),dlDel=id=>dbx('readwrite',s=>s.delete(id));
+const refDL=async()=>{DL=new Set((await dlAll()).map(x=>x.id))};
+
+/* ---------- Affichage ---------- */
+const norm=r=>({id:r.id,title:r.title,artist:r.artists?.name||'',genre:r.genres?.name||'',cover:r.cover_url,path:r.audio_path,dur:r.duration_seconds,dlable:r.downloadable,feat:r.featured});
+const row=(t,k,i)=>{T[t.id]=t;return `<div class="row" data-play="${esc(k)}:${i}"><div class="cv">${t.cover?`<img src="${esc(t.cover)}" loading="lazy" alt="" onerror="this.remove()">`:''}</div><div class="tx"><b>${esc(t.title)}</b><span>${esc(t.artist)}${t.genre?' · '+esc(t.genre):''}</span></div><span class="du">${fmt(t.dur)}</span>${t.dlable?`<button class="ic ${DL.has(t.id)?'on':''}" data-dl="${t.id}">${DL.has(t.id)?'✓':'⇩'}</button>`:''}<button class="ic ${FAV.has(t.id)?'on':''}" data-fav="${t.id}">${FAV.has(t.id)?'♥':'♡'}</button></div>`};
+const sec=(h,l,k)=>{L[k]=l;return `<h2>${esc(h)}</h2>`+l.map((t,i)=>row(t,k,i)).join('')};
+
+const views={
+async home(v){const {data,error}=await SB.from('tracks').select(QS).eq('status','approved').order('published_at',{ascending:false}).limit(150);if(error)throw error;await refDL();const a=data.map(norm);
+ if(!a.length){v.innerHTML='<p class="m">Aucune musique pour le moment. L’administrateur doit d’abord ajouter des titres (Profil, puis Espace administrateur).</p>';return}
+ let h='';const f=a.filter(x=>x.feat);if(f.length)h+=sec('À la une',f.slice(0,5),'feat');h+=sec('Nouveautés',a.slice(0,8),'new');
+ const g={};a.forEach(x=>{if(x.genre)(g[x.genre]=g[x.genre]||[]).push(x)});Object.keys(g).forEach(n=>h+=sec(n,g[n].slice(0,6),'g:'+n));v.innerHTML=h},
+async explore(v){const {data:gs}=await SB.from('genres').select('id,name').order('name');
+ v.innerHTML=`<input id="q" type="search" placeholder="Chanson, artiste, producteur…"><div class="chips">${(gs||[]).map(g=>`<button data-g="${g.id}">${esc(g.name)}</button>`).join('')}</div><div id="res"></div>`;
+ let tm;$('#q').oninput=e=>{clearTimeout(tm);tm=setTimeout(()=>find(e.target.value),300)}},
+async dl(v){const a=await dlAll();DL=new Set(a.map(x=>x.id));const l=a.map(x=>x.t);L.d=l;const mb=(a.reduce((s,x)=>s+x.size,0)/1048576).toFixed(1);
+ v.innerHTML=`<h2>Ma musique hors ligne</h2><p class="m">${l.length} titre(s) · ${mb} Mo sur ce téléphone. Appuie sur ✓ pour supprimer un téléchargement.</p>`+(l.length?l.map((t,i)=>row(t,'d',i)).join(''):'<p class="m">Aucun téléchargement. Appuie sur ⇩ à côté d’un titre.</p>')},
+async lib(v){if(!user){v.innerHTML='<p class="m">Connecte-toi pour voir ta bibliothèque.</p>';return}await refDL();
+ const [f,h]=await Promise.all([SB.from('favorites').select(`tracks(${QS})`).eq('user_id',user.id).order('created_at',{ascending:false}),SB.from('plays').select(`tracks(${QS})`).eq('user_id',user.id).order('played_at',{ascending:false}).limit(40)]);
+ const fl=(f.data||[]).map(x=>x.tracks).filter(Boolean).map(norm),seen=new Set(),hl=(h.data||[]).map(x=>x.tracks).filter(x=>x&&!seen.has(x.id)&&seen.add(x.id)).map(norm);
+ v.innerHTML=(fl.length?sec('Mes favoris',fl,'f'):'<h2>Mes favoris</h2><p class="m">Appuie sur ♡ pour ajouter un titre.</p>')+(hl.length?sec('Historique d’écoute',hl.slice(0,15),'h'):'')},
+async me(v){if(!user){v.innerHTML='<p class="m">Non connecté (mode hors ligne).</p>';return}
+ v.innerHTML=`<h2>Mon profil</h2><p class="m">${esc(user.email)}${profile?.role==='admin'?' · Administrateur':''}</p><input id="dn" placeholder="Nom affiché" value="${esc(profile?.display_name)}"><button class="btn" id="sv">Enregistrer</button>${profile?.role==='admin'?'<button class="btn s" data-go="admin">Espace administrateur</button>':''}<button class="btn s" id="lo">Se déconnecter</button><p class="m">Pour installer l’app : sur iPhone, bouton Partager puis « Sur l’écran d’accueil ». Sur Android, menu ⋮ puis « Installer l’application ».</p>`;
+ $('#sv').onclick=async()=>{const {error}=await SB.from('profiles').update({display_name:$('#dn').value}).eq('id',user.id);toast(error?error.message:'Profil enregistré')};
+ $('#lo').onclick=()=>SB.auth.signOut()},
+async admin(v){if(profile?.role!=='admin'){v.innerHTML='<p class="m">Accès réservé.</p>';return}
+ const {data:gs}=await SB.from('genres').select('id,name').order('name');
+ v.innerHTML=`<h2>Ajouter un titre</h2><input id="aa" placeholder="Nom de l’artiste"><input id="at" placeholder="Titre"><input id="ap" placeholder="Producteur (facultatif)"><select id="ag">${gs.map(g=>`<option value="${g.id}">${esc(g.name)}</option>`).join('')}</select><p class="m">Fichier audio (mp3, m4a)</p><input id="af" type="file" accept="audio/*,video/mp4,.mp3,.m4a,.aac,.wav,.mp4"><p class="m" id="afn">Aucun fichier choisi</p><p class="m">Pochette (image)</p><input id="ac" type="file" accept="image/*"><label class="m"><input id="ar" type="checkbox" style="width:auto"> J’ai les droits : téléchargement autorisé</label><button class="btn" id="as">Publier</button><p class="m" id="am"></p>`;
+ $('#af').onchange=e=>{const f=e.target.files[0];$('#afn').textContent=f?'✓ '+f.name+' ('+(f.size/1048576).toFixed(1)+' Mo)':'Aucun fichier choisi'};
+ $('#as').onclick=publish}
+};
+async function render(){const v=$('#view');$$('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.tab===tab||(tab==='admin'&&b.dataset.tab==='me')));v.innerHTML='<p class="m">Chargement…</p>';
+ try{await views[tab](v)}catch(e){v.innerHTML=`<p class="m">Erreur : ${esc(e.message)}</p>`}}
+
+async function find(q,gid){const r=$('#res');q=(q||'').replace(/[,()%*]/g,' ').trim();if(!q&&!gid){r.innerHTML='';return}
+ let qb=SB.from('tracks').select(QS).eq('status','approved').limit(50);
+ if(gid)qb=qb.eq('genre_id',gid);else{const {data:ar}=await SB.from('artists').select('id').eq('status','approved').ilike('name',`%${q}%`);let f=`title.ilike.%${q}%,producer.ilike.%${q}%`;if(ar&&ar.length)f+=`,artist_id.in.(${ar.map(x=>x.id).join(',')})`;qb=qb.or(f)}
+ const {data,error}=await qb;if(error){r.innerHTML=`<p class="m">${esc(error.message)}</p>`;return}await refDL();const l=data.map(norm);L.s=l;r.innerHTML=l.length?l.map((t,i)=>row(t,'s',i)).join(''):'<p class="m">Aucun résultat.</p>'}
+
+/* ---------- Favoris & téléchargements ---------- */
+async function fav(id){if(!user)return toast('Connecte-toi d’abord');
+ if(FAV.has(id)){FAV.delete(id);await SB.from('favorites').delete().eq('user_id',user.id).eq('track_id',id)}else{FAV.add(id);await SB.from('favorites').insert({user_id:user.id,track_id:id})}
+ $$(`[data-fav="${id}"]`).forEach(x=>{x.textContent=FAV.has(id)?'♥':'♡';x.classList.toggle('on',FAV.has(id))})}
+async function dl(id,b){const t=T[id];if(!t)return;
+ if(DL.has(id)){if(confirm('Supprimer ce téléchargement du téléphone ?')){await dlDel(id);DL.delete(id);if(tab==='dl')render();else{b.textContent='⇩';b.classList.remove('on')}}return}
+ if(!navigator.onLine)return toast('Connexion Internet nécessaire pour télécharger');
+ try{b.textContent='0%';navigator.storage?.persist?.();
+  const {data,error}=await SB.storage.from('audio').createSignedUrl(t.path,600);if(error)throw error;
+  const r=await fetch(data.signedUrl);if(!r.ok)throw new Error('Fichier introuvable');
+  const n=+r.headers.get('content-length')||0,rd=r.body.getReader(),ch=[];let g=0;
+  for(;;){const {done,value}=await rd.read();if(done)break;ch.push(value);g+=value.length;if(n)b.textContent=Math.round(g/n*100)+'%'}
+  await dlPut({id,t,blob:new Blob(ch,{type:r.headers.get('content-type')||'audio/mpeg'}),size:g});DL.add(id);
+  SB.from('downloads_log').insert({user_id:user.id,track_id:id}).then(()=>{});b.textContent='✓';b.classList.add('on');toast('Téléchargé : disponible hors ligne')
+ }catch(e){b.textContent='⇩';toast('Échec du téléchargement : '+e.message)}}
+
+/* ---------- Lecteur ---------- */
+async function playIdx(i){if(i<0||i>=Q.length)return;qi=i;cur=Q[i];const loc=await dlGet(cur.id);let src;
+ if(curUrl){URL.revokeObjectURL(curUrl);curUrl=null}
+ if(loc){src=curUrl=URL.createObjectURL(loc.blob)}
+ else{if(!navigator.onLine)return toast('Hors connexion : ce titre n’est pas téléchargé');const {data,error}=await SB.storage.from('audio').createSignedUrl(cur.path,3600);if(error)return toast(error.message);src=data.signedUrl;
+  if(user)SB.from('plays').insert({user_id:user.id,track_id:cur.id}).then(()=>{})}
+ au.src=src;try{await au.play()}catch(e){toast('Lecture impossible : '+e.message)}setUI()}
+function next(auto){if(!Q.length)return;if(shuf&&Q.length>1){let j;do{j=Math.floor(Math.random()*Q.length)}while(j===qi);return playIdx(j)}
+ if(qi+1<Q.length)return playIdx(qi+1);if(rep===2||!auto)return playIdx(0)}
+function prev(){if(au.currentTime>3)au.currentTime=0;else playIdx(qi>0?qi-1:0)}
+function setUI(){if(!cur)return;$('#mini').hidden=false;const im=cur.cover?`<img src="${esc(cur.cover)}" alt="" onerror="this.remove()">`:'';
+ $('#mcv').innerHTML=im;$('#scv').innerHTML=im;$('#mt').textContent=$('#st').textContent=cur.title;$('#ma').textContent=$('#sa').textContent=cur.artist;
+ $('#sq').innerHTML=Q.map((t,i)=>`<div class="row" data-q="${i}"><div class="tx"><b ${i===qi?'style="color:var(--g)"':''}>${esc(t.title)}</b><span>${esc(t.artist)}</span></div></div>`).join('');
+ if('mediaSession' in navigator){navigator.mediaSession.metadata=new MediaMetadata({title:cur.title,artist:cur.artist,artwork:cur.cover?[{src:cur.cover}]:[{src:new URL('icon-512.png',location.href).href,sizes:'512x512',type:'image/png'}]})}}
+au.addEventListener('timeupdate',()=>{const p=au.duration?au.currentTime/au.duration:0;$('#mbar').style.width=p*100+'%';$('#sk').value=p*1000;$('#tc').textContent=fmt(au.currentTime);$('#td').textContent=fmt(au.duration)});
+au.addEventListener('ended',()=>{if(rep===1)playIdx(qi);else next(true)});
+['play','pause'].forEach(ev=>au.addEventListener(ev,()=>{const s=au.paused?'▶':'⏸';$('#mpp').textContent=$('#spp').textContent=s;if('mediaSession' in navigator)navigator.mediaSession.playbackState=au.paused?'paused':'playing'}));
+const tog=()=>au.src&&(au.paused?au.play():au.pause());
+$('#mpp').onclick=$('#spp').onclick=tog;$('#mnx').onclick=$('#nx').onclick=()=>next(false);$('#pv').onclick=prev;
+$('#sk').oninput=e=>{if(au.duration)au.currentTime=e.target.value/1000*au.duration};
+$('#vo').oninput=e=>au.volume=e.target.value;
+$('#sh').onclick=e=>{shuf=!shuf;e.target.classList.toggle('on',shuf)};
+$('#rp').onclick=e=>{rep=(rep+1)%3;e.target.textContent=rep===1?'↻1':'↻';e.target.classList.toggle('on',rep>0)};
+$('#sc').onclick=()=>$('#sheet').hidden=true;
+if('mediaSession' in navigator){const h=(a,f)=>{try{navigator.mediaSession.setActionHandler(a,f)}catch(e){}};h('play',()=>au.play());h('pause',()=>au.pause());h('previoustrack',prev);h('nexttrack',()=>next(false));h('seekto',d=>{au.currentTime=d.seekTime})}
+
+/* ---------- Espace administrateur ---------- */
+const durOf=f=>new Promise(ok=>{const a=new Audio(),u=URL.createObjectURL(f);a.preload='metadata';a.onloadedmetadata=()=>{URL.revokeObjectURL(u);ok(Math.round(a.duration)||null)};a.onerror=()=>ok(null);a.src=u});
+const safe=n=>n.normalize('NFD').replace(/[^\w.\-]+/g,'_');
+async function publish(){const m=$('#am'),name=$('#aa').value.trim(),title=$('#at').value.trim(),af=$('#af').files[0],cf=$('#ac').files[0];
+ if(!name||!title||!af)return m.textContent='Artiste, titre et fichier audio sont obligatoires.';
+ $('#as').disabled=true;m.textContent='Envoi en cours… ne ferme pas la page.';
+ try{let {data:a}=await SB.from('artists').select('id').eq('name',name).maybeSingle();
+  if(!a){const r=await SB.from('artists').insert({name,status:'approved'}).select('id').single();if(r.error)throw r.error;a=r.data}
+  const p=`${a.id}/${Date.now()}-`;
+  const up=await SB.storage.from('audio').upload(p+safe(af.name),af);if(up.error)throw up.error;
+  let cover=null;if(cf){const uc=await SB.storage.from('covers').upload(p+safe(cf.name),cf);if(uc.error)throw uc.error;cover=SB.storage.from('covers').getPublicUrl(uc.data.path).data.publicUrl}
+  const ok=$('#ar').checked,ins=await SB.from('tracks').insert({artist_id:a.id,genre_id:+$('#ag').value,title,producer:$('#ap').value.trim()||null,duration_seconds:await durOf(af),cover_url:cover,audio_path:up.data.path,rights_confirmed:ok,downloadable:ok,status:'approved',published_at:new Date().toISOString()});
+  if(ins.error)throw ins.error;m.textContent='✓ Titre publié.';['at','ap','af','ac'].forEach(i=>$('#'+i).value='')
+ }catch(e){m.textContent='Erreur : '+e.message}$('#as').disabled=false}
+
+/* ---------- Clics ---------- */
+document.addEventListener('click',e=>{const t=e.target;let b;
+ if(b=t.closest('[data-dl]'))return dl(b.dataset.dl,b);
+ if(b=t.closest('[data-fav]'))return fav(b.dataset.fav);
+ if(b=t.closest('[data-g]'))return find('',b.dataset.g);
+ if(b=t.closest('[data-go]')){tab=b.dataset.go;return render()}
+ if(b=t.closest('#nav button')){tab=b.dataset.tab;return render()}
+ if(b=t.closest('[data-q]'))return playIdx(+b.dataset.q);
+ if(b=t.closest('[data-play]')){const s=b.dataset.play,c=s.lastIndexOf(':');Q=[...L[s.slice(0,c)]];return playIdx(+s.slice(c+1))}
+ if(t.closest('#mini')&&!t.closest('button'))$('#sheet').hidden=false});
+
+/* ---------- Connexion ---------- */
+const am2=m=>$('#am2').textContent=m;
+const cred=()=>{const email=$('#em').value.trim(),password=$('#pw').value;if(!email||!password){am2('Écris ton e-mail ET ton mot de passe, puis appuie à nouveau.');return null}if(password.length<6){am2('Le mot de passe doit avoir au moins 6 caractères.');return null}am2('Un instant…');return {email,password}};
+$('#li').onclick=async()=>{const c=cred();if(!c)return;const {error}=await SB.auth.signInWithPassword(c);error?am2('Connexion impossible : '+error.message):boot()};
+$('#su').onclick=async()=>{const c=cred();if(!c)return;const {data,error}=await SB.auth.signUp({...c,options:{data:{display_name:$('#nm').value.trim()}}});
+ if(error)am2('Création impossible : '+error.message);else if(!data.session)am2('Compte créé. Vérifie ton e-mail, puis reviens te connecter.');else boot()};
+SB.auth.onAuthStateChange(ev=>{if(ev==='SIGNED_OUT'){au.pause();$('#mini').hidden=true;boot()}});
+async function boot(){const {data}=await SB.auth.getSession();user=data.session?.user||null;profile=null;FAV=new Set();
+ if(user){try{const p=await SB.from('profiles').select('*').eq('id',user.id).single();profile=p.data;const f=await SB.from('favorites').select('track_id');FAV=new Set((f.data||[]).map(x=>x.track_id))}catch(e){}}
+ if(!user&&navigator.onLine){$('#app').hidden=true;$('#auth').hidden=false;return}
+ $('#auth').hidden=true;$('#app').hidden=false;if(!user)tab='dl';render()}
+boot();
+if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js'));
+</script></body></html>
